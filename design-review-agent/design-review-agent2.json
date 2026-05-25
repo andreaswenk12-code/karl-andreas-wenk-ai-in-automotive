@@ -1,0 +1,109 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "be4c0558-9488-403f-85c4-15a76efa9c6f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "Part: Battery housing bracket\nMaterial: Aluminum 6061-T6\nDimensions: 250x180x45 mm\nTolerance: ±0.2 mm\nWeight target: under 1.8 kg\nUsed in BEV high-voltage module.\n\nPlease analyze this part as an expert automotive design review engineer."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        432,
+        0
+      ],
+      "id": "911dd4b0-6f8e-4c9c-b28b-793347e09c57",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "58v5e1WkEVpJA2dN",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ae57ea9d-9aec-4b59-b219-1e13eb1948b3",
+              "name": "result",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        784,
+        0
+      ],
+      "id": "959052c5-8c78-442a-aa20-bc4f4e98e421",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "44171ab1-1888-453e-a2f3-bbc935e4722e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "30b1f2a91b0da920f6f8d14f77ecd958f868852ec4200d082c0f7273053923dd"
+  },
+  "id": "swwyyk32DoFuWWsW",
+  "tags": []
+}
